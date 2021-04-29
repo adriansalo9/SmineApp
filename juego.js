@@ -18,6 +18,8 @@ function pintarTablero() {
     while (tablero.firstChild) {
         tablero.firstChild.removeEventListener("contextmenu", marcar);
         tablero.firstChild.removeEventListener("click", destapar);
+        tablero.firstChild.removeEventListener("touchstart", destapar);
+        tablero.firstChild.removeEventListener("touchend", marcar);
         tablero.removeChild(tablero.firstChild);
     }
 
@@ -30,7 +32,8 @@ function pintarTablero() {
             newDiv.dataset.columna = c;
             newDiv.addEventListener("contextmenu", marcar); //evento con el botón derecho del raton
             newDiv.addEventListener("click", destapar); //evento con el botón izquierdo del raton
-
+            newDiv.addEventListener("touchstart", destapar); //evento movil
+            newDiv.addEventListener("touchend", marcar); //evento movil
             tablero.appendChild(newDiv);
         }
     }
@@ -110,7 +113,7 @@ function contarMinas() {
 
 
 function marcar(miEvento) {
-    if (miEvento.type === "contextmenu") {
+    if (miEvento.type === "contextmenu" || miEvento.type === "touchstart") {
         console.log(miEvento);
 
         //obtenemos el elemento que ha disparado el evento
