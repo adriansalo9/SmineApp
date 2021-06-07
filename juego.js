@@ -156,10 +156,13 @@ function marcar(miEvento) {
 
     }
 }
-
+var temporizador = true;
 function destapar(miEvento) {
+    if (temporizador) {
+        empezar();
+        temporizador = false;
+    }
     if (miEvento.type === "click") {
-        empezar(inicio);
         let casilla = miEvento.currentTarget;
         let fila = parseInt(casilla.dataset.fila, 10);
         let columna = parseInt(casilla.dataset.columna, 10);
@@ -214,15 +217,15 @@ function destaparCasilla(fila, columna) {
                 } else if (buscaminas.aCampoMinas[fila][columna] == "B") {
                     // si por el contrario hay bomba quitamos la B
                     casilla.innerHTML = "";
-
                     //añadimos el estilo de que hay bomba
                     casilla.classList.add("icon-bomba");
-
+                    
                     // y que se nos ha olvidado marcarla
                     casilla.classList.add("sinmarcar");
-
+                    
                     // y resolvemos el tablero indicando (false), que hemos cometido un fallo
                     resolverTablero(false);
+                    pausa();
                 }
             }
         }
@@ -309,10 +312,10 @@ function activo() {
 }
 //botón pausa / continuar
 function pausa() {
-    if (marcha == 0) { //con el boton en "continuar"
+    /*if (marcha == 0) { //con el boton en "continuar"
         continuar() //ir a la función continuar
-    }
-    else {  //con el botón en "parar"
+    }*/
+       //con el botón en "parar"
         parar() //ir a la funcion parar
         document.cron.boton1.value = "Empezar";
         var scoreBonito = (mn + ' mn ' + sg + ' sg ' + cs + ' cs ');
@@ -324,7 +327,7 @@ function pausa() {
         
         alert(scoreBonito);
         guardarScore(mins,sgs,cnts);
-    }
+    
 }
 //Botón 1: Estado empezar: Poner en marcha el crono
 function empezar() {
